@@ -1,0 +1,123 @@
+using System;
+
+namespace AdvancedCalculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Добро пожаловать в продвинутый калькулятор!");
+            Console.WriteLine("Доступные операции:");
+            Console.WriteLine("1. Сложение (+)");
+            Console.WriteLine("2. Вычитание (-)");
+            Console.WriteLine("3. Умножение (*)");
+            Console.WriteLine("4. Деление (/)");
+            Console.WriteLine("5. Квадратный корень (sqrt)");
+            Console.WriteLine("6. Возведение в степень (^)");
+
+            while (true)
+            {
+                Console.Write("Введите операцию (или 'exit' для выхода): ");
+                string operation = Console.ReadLine();
+
+                if (operation.ToLower() == "exit")
+                {
+                    break;
+                }
+
+                double result = 0;
+
+                try
+                {
+                    switch (operation)
+                    {
+                        case "+":
+                            result = PerformAddition();
+                            break;
+                        case "-":
+                            result = PerformSubtraction();
+                            break;
+                        case "*":
+                            result = PerformMultiplication();
+                            break;
+                        case "/":
+                            result = PerformDivision();
+                            break;
+                        case "sqrt":
+                            result = PerformSquareRoot();
+                            break;
+                        case "^":
+                            result = PerformPower();
+                            break;
+                        default:
+                            Console.WriteLine("Неверная операция. Пожалуйста, попробуйте снова.");
+                            continue;
+                    }
+
+                    Console.WriteLine($"Результат: {result}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                }
+            }
+        }
+
+        static double PerformAddition()
+        {
+            Console.Write("Введите первое число: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите второе число: ");
+            double b = Convert.ToDouble(Console.ReadLine());
+            return a + b;
+        }
+
+        static double PerformSubtraction()
+        {
+            Console.Write("Введите первое число: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите второе число: ");
+            double b = Convert.ToDouble(Console.ReadLine());
+            return a - b;
+        }
+
+        static double PerformMultiplication()
+        {
+            Console.Write("Введите первое число: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите второе число: ");
+            double b = Convert.ToDouble(Console.ReadLine());
+            return a * b;
+        }
+
+        static double PerformDivision()
+        {
+            Console.Write("Введите делимое: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите делитель: ");
+            double b = Convert.ToDouble(Console.ReadLine());
+            if (b == 0)
+                throw new DivideByZeroException("Деление на ноль невозможно.");
+            return a / b;
+        }
+
+        static double PerformSquareRoot()
+        {
+            Console.Write("Введите число: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            if (a < 0)
+
+                throw new ArgumentException("Невозможно вычислить квадратный корень отрицательного числа.");
+            return Math.Sqrt(a);
+        }
+
+        static double PerformPower()
+        {
+            Console.Write("Введите основание: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите экспоненту: ");
+            double b = Convert.ToDouble(Console.ReadLine());
+            return Math.Pow(a, b);
+        }
+    }
+}
