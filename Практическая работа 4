@@ -1,0 +1,125 @@
+For 15
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Запрашиваем вещественное число A
+        Console.Write("Введите вещественное число A: ");
+        double A = double.Parse(Console.ReadLine());
+
+        // Запрашиваем целое число N
+        Console.Write("Введите целое число N (> 0): ");
+        int N = int.Parse(Console.ReadLine());
+
+        // Проверяем, что N больше 0
+        if (N <= 0)
+        {
+            Console.WriteLine("Пожалуйста, введите значение N больше 0.");
+            return;
+        }
+
+        // Вычисляем A в степени N
+        double result = 1;
+
+        for (int i = 0; i < N; i++)
+        {
+            result *= A;
+        }
+
+        // Выводим результат
+        Console.WriteLine($"A в степени N = {result}");
+    }
+}
+
+
+
+While 20
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Запрашиваем целое число N
+        Console.Write("Введите целое число N (> 0): ");
+        int N = int.Parse(Console.ReadLine());
+
+        // Проверяем, что N больше 0
+        if (N <= 0)
+        {
+            Console.WriteLine("Пожалуйста, введите значение N больше 0.");
+            return;
+        }
+
+        // Переменная для хранения информации о наличии цифры "2"
+        bool hasTwo = false;
+
+        // Проверяем каждую цифру числа N
+        while (N > 0)
+        {
+            int digit = N % 10; // Получаем последнюю цифру числа
+
+            if (digit == 2) // Проверяем, равна ли она 2
+            {
+                hasTwo = true;
+                break;
+            }
+
+            N /= 10; // Удаляем последнюю цифру
+        }
+
+        // Выводим результат
+        Console.WriteLine(hasTwo ? "TRUE" : "FALSE");
+    }
+}
+
+
+
+Series 20
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Запрашиваем целое число N
+        Console.Write("Введите целое число N (> 0): ");
+        int N = int.Parse(Console.ReadLine());
+
+        // Проверяем, что N больше 0
+        if (N <= 0)
+        {
+            Console.WriteLine("Пожалуйста, введите значение N больше 0.");
+            return;
+        }
+
+        int[] numbers = new int[N];
+
+        // Запрашиваем набор из N целых чисел
+        Console.WriteLine($"Введите {N} целых чисел:");
+        for (int i = 0; i < N; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        // Переменная для хранения количества элементов, меньших своего правого соседа
+        int count = 0;
+
+        Console.WriteLine("Элементы, меньшие своего правого соседа:");
+
+        // Ищем элементы, меньшие своего правого соседа
+        for (int i = 0; i < N - 1; i++)
+        {
+            if (numbers[i] < numbers[i + 1])
+            {
+                Console.WriteLine(numbers[i]);
+                count++;
+            }
+        }
+
+        // Выводим количество таких элементов
+        Console.WriteLine($"Количество элементов, меньших своего правого соседа: {count}");
+    }
+}
