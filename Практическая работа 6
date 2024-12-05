@@ -1,0 +1,188 @@
+string10
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ввод строки от пользователя
+        Console.Write("Введите строку: ");
+        string input = Console.ReadLine();
+
+        // Разворот строки
+        string reversed = ReverseString(input);
+
+        // Вывод результата
+        Console.WriteLine("Строка в обратном порядке: " + reversed);
+    }
+
+    static string ReverseString(string str)
+    {
+        char[] charArray = str.ToCharArray(); // Преобразуем строку в массив символов
+        Array.Reverse(charArray); // Разворачиваем массив
+        return new string(charArray); // Преобразуем обратно в строку
+    }
+}
+
+
+
+
+
+string23
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ввод арифметического выражения от пользователя
+        Console.Write("Введите арифметическое выражение: ");
+        string input = Console.ReadLine();
+
+        // Вычисление значения выражения
+        int result = EvaluateExpression(input);
+
+        // Вывод результата
+        Console.WriteLine("Результат выражения: " + result);
+    }
+
+    static int EvaluateExpression(string expression)
+    {
+        int result = 0;
+        int currentNumber = 0;
+        char operation = '+'; // Начинаем с '+' для обработки первого числа
+
+        for (int i = 0; i < expression.Length; i++)
+        {
+            char currentChar = expression[i];
+
+            // Если текущий символ - цифра, собираем число
+            if (char.IsDigit(currentChar))
+            {
+                currentNumber = currentNumber * 10 + (currentChar - '0');
+            }
+
+            // Если текущий символ - оператор или последний символ строки
+            if (currentChar == '+' || currentChar == '-' || i == expression.Length - 1)
+            {
+                // Обработка результата в зависимости от предыдущей операции
+                if (operation == '+')
+                {
+                    result += currentNumber;
+                }
+                else if (operation == '-')
+                {
+                    result -= currentNumber;
+                }
+
+                // Обновляем текущую операцию и обнуляем текущее число
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+
+        return result;
+    }
+}
+
+
+string30
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ввод символа
+        Console.Write("Введите символ C: ");
+        char c = Console.ReadKey().KeyChar; // Считываем символ
+        Console.WriteLine();
+
+        // Ввод строки S
+        Console.Write("Введите строку S: ");
+        string s = Console.ReadLine();
+
+        // Ввод строки S0
+        Console.Write("Введите строку S0 (текст для вставки): ");
+        string s0 = Console.ReadLine();
+
+        // Вставка строки S0 после каждого вхождения символа C
+        string result = InsertAfterCharacter(s, c, s0);
+
+        // Вывод результата
+        Console.WriteLine("Результат: " + result);
+    }
+
+    static string InsertAfterCharacter(string original, char character, string toInsert)
+    {
+        // Используем StringBuilder для эффективного создания новой строки
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        // Проходим по всем символам оригинальной строки
+        foreach (char ch in original)
+        {
+            sb.Append(ch); // Добавляем текущий символ
+
+            // Если текущий символ совпадает с указанным
+            if (ch == character)
+            {
+                sb.Append(toInsert); // Вставляем строку S0
+            }
+        }
+
+        return sb.ToString(); // Возвращаем результат
+    }
+}
+
+
+string45
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Ввод строки
+        Console.WriteLine("Введите строку, состоящую из русских слов, разделённых пробелами:");
+        string input = Console.ReadLine();
+
+        // Нахождение длины самого короткого слова
+        int minLength = FindShortestWordLength(input);
+
+        // Вывод результата
+        if (minLength > 0)
+        {
+            Console.WriteLine("Длина самого короткого слова: " + minLength);
+        }
+        else
+        {
+            Console.WriteLine("Не найдено слов в строке.");
+        }
+    }
+
+    static int FindShortestWordLength(string input)
+    {
+        // Разделяем строку на слова, убирая лишние пробелы
+        string[] words = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        // Проверяем, что в массиве есть слова
+        if (words.Length == 0)
+        {
+            return 0; // Вернуть 0, если слов нет
+        }
+
+        // Инициализируем длину самого короткого слова максимально возможным значением
+        int minLength = int.MaxValue;
+
+        // Проходим по всем словам и находим длину самого короткого
+        foreach (string word in words)
+        {
+            if (word.Length < minLength)
+            {
+                minLength = word.Length;
+            }
+        }
+
+        return minLength;
+    }
+}
