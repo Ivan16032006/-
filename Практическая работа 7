@@ -1,0 +1,148 @@
+//Практическая №7 BinaryWriter и BinaryReader.
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+[Serializable]
+public class Student
+{
+    public string FullName { get; set; }
+    public int Age { get; set; }
+    public int YearOfBirth { get; set; }
+    public string Group { get; set; }
+    public string Login { get; set; }
+    public string Password { get; set; }
+    public List<Grade> Grades { get; set; } = new List<Grade>();
+}
+
+[Serializable]
+public class Teacher
+{
+    public string FullName { get; set; }
+    public int YearOfBirth { get; set; }
+    public List<string> Subjects { get; set; } = new List<string>();
+    public List<string> Groups { get; set; } = new List<string>();
+    public string Login { get; set; }
+    public string Password { get; set; }
+}
+
+[Serializable]
+public class Grade
+{
+    public string Subject { get; set; }
+    public int Score { get; set; }
+    public DateTime DateAssigned { get; set; }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Пример входа в систему
+        Console.WriteLine("Выберите роль: 1 - Студент, 2 - Преподаватель, 3 - Администратор");
+        string role = Console.ReadLine();
+
+        switch (role)
+        {
+            case "1":
+                StudentModule();
+                break;
+            case "2":
+                TeacherModule();
+                break;
+            case "3":
+                AdminModule();
+                break;
+            default:
+                Console.WriteLine("Неверный выбор.");
+                break;
+        }
+    }
+
+    static void StudentModule()
+    {
+        // Логика для студента
+        Console.WriteLine("Студенческий модуль.");
+        // Здесь должна быть логика авторизации студента и просмотра оценок
+    }
+
+    static void TeacherModule()
+    {
+        // Логика для преподавателя
+        Console.WriteLine("Преподавательский модуль.");
+        // Здесь должна быть логика авторизации преподавателя и работы с журналом
+    }
+
+    static void AdminModule()
+    {
+        // Логика для администратора
+        Console.WriteLine("Администраторский модуль.");
+        // Здесь должна быть логика авторизации администратора и управления данными
+    }
+
+    // Метод для сохранения студентов в бинарный файл
+    static void SaveStudents(List<Student> students)
+    {
+        using (BinaryWriter writer = new BinaryWriter(File.Open("students.dat", FileMode.Create)))
+        {
+            foreach (var student in students)
+            {
+                writer.Write(student.FullName);
+                writer.Write(student.Age);
+                writer.Write(student.YearOfBirth);
+                writer.Write(student.Group);
+                writer.Write(student.Login);
+                writer.Write(student.Password);
+                writer.Write(student.Grades.Count);
+
+                foreach (var grade in student.Grades)
+                {
+                    writer.Write(grade.Subject);
+                    writer.Write(grade.Score);
+                    writer.Write(grade.DateAssigned.ToBinary());
+                }
+            }
+        }
+    }
+
+    // Метод для загрузки студентов из бинарного файла
+    static List<Student> LoadStudents()
+    {
+        var students = new List<Student>();
+
+        if (!File.Exists("students.dat"))
+            return students;
+
+        using (BinaryReader reader = new BinaryReader(File.Open("students.dat", FileMode.Open)))
+        {
+            while (reader.BaseStream.Position != reader.BaseStream.Length)
+            {
+                var student = new Student
+                {
+                    FullName = reader.ReadString(),
+                    Age = reader.ReadInt32(),
+                    YearOfBirth = reader.ReadInt32(),
+                    Group = reader.ReadString(),
+                    Login = reader.ReadString(),
+                    Password = reader.ReadString(),
+                    Grades = new List<Grade>()
+                }; int gradeCount = reader.ReadInt32();
+                for (int i = 0; i < gradeCount; i++)
+                {
+                    var grade = new Grade
+                    {
+                        Subject = reader.ReadString(),
+                        Score = reader.ReadInt32(),
+                        DateAssigned = DateTime.FromBinary(reader.ReadInt64())
+                    };
+                    student.Grades.Add(grade);
+                }
+
+                students.Add(student);
+            }
+        }
+
+        return students;
+    }
+}
