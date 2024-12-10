@@ -1,0 +1,104 @@
+Пркатическая №5
+using System;
+using System.Collections.Generic;
+
+public class Program
+{
+    public static void Main()
+    {
+        List<string> names = new List<string>();
+        while (true)
+        {
+            Console.WriteLine("\nВведите ФИО или 'exit' для выхода:");
+            string input = Console.ReadLine();
+
+            if (input.ToLower() == "exit") break;
+
+            names.Add(input);
+
+            while (true)
+            {
+                Console.WriteLine("\nВыберите операцию:");
+                Console.WriteLine("1. Вытащить фамилию, имя или отчество отдельно.");
+                Console.WriteLine("2. Отсортировать фамилии по возрастанию или убыванию.");
+                Console.WriteLine("3. Изменить имя, фамилию или отчество.");
+                Console.WriteLine("4. Удалить ФИО из списка.");
+                Console.WriteLine("5. Показать все ФИО в списке.");
+                Console.WriteLine("Введите номер операции:");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Выберите: 1 - Фамилия, 2 - Имя, 3 - Отчество");
+                        int partChoice = int.Parse(Console.ReadLine());
+                        foreach (var name in names)
+                        {
+                            string[] parts = name.Split(' ');
+                            if (partChoice == 1) Console.WriteLine("Фамилия: " + parts[0]);
+                            else if (partChoice == 2) Console.WriteLine("Имя: " + parts[1]);
+                            else if (partChoice == 3) Console.WriteLine("Отчество: " + parts[2]);
+                        }
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Сортировать по (1) возрастанию, (2) убыванию?");
+                        int sortChoice = int.Parse(Console.ReadLine());
+                        if (sortChoice == 1)
+                        {
+                            names.Sort((x, y) => x.Split(' ')[0].CompareTo(y.Split(' ')[0]));
+                        }
+                        else
+                        {
+                            names.Sort((x, y) => y.Split(' ')[0].CompareTo(x.Split(' ')[0]));
+                        }
+                        Console.WriteLine("Фамилии отсортированы.");
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Введите ФИО для изменения:");
+                        string oldName = Console.ReadLine();
+                        if (names.Contains(oldName))
+                        {
+                            Console.WriteLine("Введите новое ФИО:");
+                            string newName = Console.ReadLine();
+                            int index = names.IndexOf(oldName);
+                            names[index] = newName;
+                            Console.WriteLine("ФИО изменено.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("ФИО не найдено.");
+                        }
+                        break;
+
+                    case 4:
+                        Console.WriteLine("Введите ФИО для удаления:");
+                        string nameToRemove = Console.ReadLine();
+                        if (names.Remove(nameToRemove))
+                        {
+                            Console.WriteLine("ФИО удалено.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("ФИО не найдено.");
+                        }
+                        break;
+
+                    case 5:
+                        Console.WriteLine("Все ФИО в списке:");
+                        foreach (var name in names)
+                        {
+                            Console.WriteLine(name);
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("Неверный выбор. Попробуйте снова.");
+                        break;
+                }
+            }
+        }
+    }
+}
